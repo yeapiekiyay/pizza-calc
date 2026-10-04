@@ -288,3 +288,14 @@ describe('print / save', () => {
     expect(() => el('#print-button').click()).not.toThrow();
   });
 });
+
+describe('first paint', () => {
+  it('marks the document ready only after the saved settings are rendered', () => {
+    document.documentElement.classList.remove('ready');
+    document.body.innerHTML = body;
+    expect(document.documentElement.classList.contains('ready')).toBe(false);
+    initApp();
+    expect(document.documentElement.classList.contains('ready')).toBe(true);
+    expect(text('#stat-ball')).toBe('484');
+  });
+});

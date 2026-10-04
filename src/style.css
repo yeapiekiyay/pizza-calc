@@ -66,6 +66,11 @@ h2 {
   gap: 20px;
 }
 
+/* Saved settings are applied by script; hide the controls until then so defaults never flash. */
+html:not(.ready) .layout {
+  visibility: hidden;
+}
+
 .card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -490,13 +495,16 @@ input[type='range']:focus-visible {
     align-items: start;
   }
 
+  .stats {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Sticky only when the whole card fits, or its lower controls become unreachable. */
+@media (min-width: 760px) and (min-height: 560px) {
   .settings {
     position: sticky;
     top: 24px;
-  }
-
-  .stats {
-    grid-template-columns: repeat(4, 1fr);
   }
 }
 

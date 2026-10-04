@@ -50,6 +50,7 @@ export function initApp(doc: Document = document): void {
     input.checked = input.value === settings.thickness;
   }
   render(view());
+  doc.documentElement.classList.add('ready');
 
   sizeInput.addEventListener('input', () => update({ size: Number(sizeInput.value) }));
   quantityInput.addEventListener('input', () => update({ quantity: Number(quantityInput.value) }));

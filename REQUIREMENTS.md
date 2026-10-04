@@ -186,7 +186,7 @@ title switch with the gluten-free toggle.
 3. Add the flour and olive oil. Mix for 2 minutes.
 4. Add the sugar and salt with the mixer on low.
 5. Mix for 10 more minutes.
-6. Cover and rest for 1–3 hours.
+6. Cover and rest on the counter for 1–3 hours.
 7. Shape into balls and pinch the seams shut.
 8. Refrigerate for 2–4 days. 3 days is best.
 9. Bring to room temperature before using.

@@ -70,7 +70,8 @@ src/
   config.ts           APP_URL
   style.css
 tests/
-  calc.test.ts  tips.test.ts  storage.test.ts  format.test.ts  app.test.ts
+  calc.test.ts  tips.test.ts  storage.test.ts  format.test.ts
+  content.test.ts  app.test.ts
 ```
 
 ### 4.2 Types
@@ -271,8 +272,9 @@ Vitest. Pure modules are tested directly; the DOM wiring gets one jsdom test.
 - `storage.test.ts`: round trip; each field invalid on its own; unparseable
   JSON; unknown `v`; storage that throws on read and on write.
 - `format.test.ts`: copy text matches exactly for regular and gluten free;
-  pill text uses singular "ball" at quantity 1; print HTML contains the step
-  list for the current dough type.
+  print HTML contains the step list for the current dough type.
+- `content.test.ts`: pill text for each dough type, with singular "ball" at
+  quantity 1; step lists and titles switch with dough type.
 - `app.test.ts` (jsdom): loading with saved settings sets controls and outputs;
   changing an input updates outputs and writes storage; toggling gluten free
   with the instructions open leaves them open.

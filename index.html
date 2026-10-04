@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pizza Dough Calculator</title>
+    <meta name="description" content="Exact pizza dough ingredient weights in grams for any size, batch and crust thickness, regular or gluten free.">
+    <link rel="stylesheet" href="/src/style.css">
+  </head>
+  <body>
+    <main class="page">
+      <header class="page-header">
+        <h1>Pizza Dough Calculator</h1>
+        <p class="lede">Exact ingredient weights for any size, batch and crust.</p>
+      </header>
+
+      <div class="layout">
+        <section class="card settings" aria-labelledby="settings-heading">
+          <h2 id="settings-heading">Your pizza settings</h2>
+
+          <div class="field">
+            <div class="field-head">
+              <label for="size">Pizza size</label>
+              <output id="size-value" for="size"></output>
+            </div>
+            <input type="range" id="size" min="10" max="20" step="1" value="16">
+            <div class="ticks" aria-hidden="true">
+              <span>10"</span><span>15"</span><span>20"</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="field-head">
+              <label for="quantity">Number of pizzas</label>
+              <output id="quantity-value" for="quantity"></output>
+            </div>
+            <input type="range" id="quantity" min="1" max="10" step="1" value="6">
+            <div class="ticks" style="--mid: 44.44%" aria-hidden="true">
+              <span>1</span><span>5</span><span>10</span>
+            </div>
+          </div>
+
+          <fieldset class="field thickness">
+            <legend>Thickness</legend>
+            <div class="segmented">
+              <label><input type="radio" name="thickness" value="thin"><span>Thin</span></label>
+              <label><input type="radio" name="thickness" value="regular"><span>Regular</span></label>
+              <label><input type="radio" name="thickness" value="thick"><span>Thick</span></label>
+            </div>
+          </fieldset>
+
+          <label class="field switch-row" for="gluten-free">
+            <span class="switch-text">
+              <span class="switch-label">Gluten free</span>
+              <span class="switch-sub">GF flour + adjusted hydration</span>
+            </span>
+            <input type="checkbox" role="switch" id="gluten-free">
+            <span class="switch-track" aria-hidden="true"></span>
+          </label>
+        </section>
+
+        <section class="results" aria-label="Recipe">
+          <dl class="stats">
+            <div class="card stat">
+              <dt>Dough ball</dt>
+              <dd><span class="stat-value" id="stat-ball"></span> <span class="stat-unit">grams each</span></dd>
+            </div>
+            <div class="card stat">
+              <dt>Total flour</dt>
+              <dd><span class="stat-value" id="stat-flour"></span> <span class="stat-unit">grams</span></dd>
+            </div>
+            <div class="card stat">
+              <dt>Total water</dt>
+              <dd><span class="stat-value" id="stat-water"></span> <span class="stat-unit">grams</span></dd>
+            </div>
+            <div class="card stat">
+              <dt>Hydration</dt>
+              <dd><span class="stat-value" id="stat-hydration"></span> <span class="stat-unit">percent</span></dd>
+            </div>
+          </dl>
+
+          <ul class="pills" aria-label="Summary">
+            <li class="pill pill-accent" id="pill-type"></li>
+            <li class="pill" id="pill-ferment"></li>
+            <li class="pill" id="pill-config"></li>
+          </ul>
+
+          <div class="card table-card">
+            <table class="ingredients">
+              <thead>
+                <tr>
+                  <th scope="col">Ingredient</th>
+                  <th scope="col" class="num">Amount</th>
+                  <th scope="col" class="num">Baker's %</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-ingredient="flour">
+                  <th scope="row"><span class="ing-name"></span><span class="ing-note"></span></th>
+                  <td class="num"><span class="ing-amount"></span> g</td>
+                  <td class="num ing-percent"></td>
+                </tr>
+                <tr data-ingredient="water">
+                  <th scope="row"><span class="ing-name"></span><span class="ing-note"></span></th>
+                  <td class="num"><span class="ing-amount"></span> g</td>
+                  <td class="num ing-percent"></td>
+                </tr>
+                <tr data-ingredient="yeast">
+                  <th scope="row"><span class="ing-name"></span><span class="ing-note"></span></th>
+                  <td class="num"><span class="ing-amount"></span> g</td>
+                  <td class="num ing-percent"></td>
+                </tr>
+                <tr data-ingredient="salt">
+                  <th scope="row"><span class="ing-name"></span><span class="ing-note"></span></th>
+                  <td class="num"><span class="ing-amount"></span> g</td>
+                  <td class="num ing-percent"></td>
+                </tr>
+                <tr data-ingredient="sugar">
+                  <th scope="row"><span class="ing-name"></span><span class="ing-note"></span></th>
+                  <td class="num"><span class="ing-amount"></span> g</td>
+                  <td class="num ing-percent"></td>
+                </tr>
+                <tr data-ingredient="oil">
+                  <th scope="row"><span class="ing-name"></span><span class="ing-note"></span></th>
+                  <td class="num"><span class="ing-amount"></span> g</td>
+                  <td class="num ing-percent"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <ul class="tips" id="tips" hidden></ul>
+
+          <section class="card instructions">
+            <h2>
+              <button type="button" id="instructions-toggle" aria-expanded="false" aria-controls="instructions-panel">
+                <span id="instructions-title"></span>
+                <span class="chevron" aria-hidden="true">▼</span>
+              </button>
+            </h2>
+            <div id="instructions-panel" hidden>
+              <ol class="steps" id="instructions-steps"></ol>
+            </div>
+          </section>
+
+          <div class="actions">
+            <button type="button" class="btn btn-primary" id="copy-button">Copy recipe</button>
+            <button type="button" class="btn" id="print-button">Print / save</button>
+          </div>
+        </section>
+      </div>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

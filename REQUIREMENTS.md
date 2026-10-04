@@ -5,7 +5,7 @@
 A single-page, client-side tool. The user picks pizza size, number of pizzas,
 crust thickness and regular vs. gluten-free dough. The tool shows exact
 ingredient weights in grams, baker's percentages, the weight of each dough ball,
-a contextual tip, and dough-making instructions. No signup, no server calls.
+contextual tips, and dough-making instructions. No signup, no server calls.
 Every input change recalculates immediately.
 
 ## 2. Inputs
@@ -157,18 +157,19 @@ percentages from section 3.4.
 
 "ball" is singular when quantity is 1.
 
-## 5. Contextual tip
+## 5. Contextual tips
 
-Show at most one tip. Evaluate in this order; first match wins. If none match,
-hide the tip.
+Show every tip whose condition matches, in the order below, as a stacked list
+with one label per tip. If none match, hide the tip area. Thick and thin are
+mutually exclusive, so at most four tips show at once.
 
-| Priority | Condition | Label | Text |
+| Order | Condition | Label | Text |
 |---|---|---|---|
-| 1 | Gluten free on | "GF tip" | "GF dough is stickier — oil your hands before shaping." |
-| 2 | Size ≥ 18" | "Big pizza tip" | `{size}" is large — preheat for the full 45 min at max temp.` |
-| 3 | Quantity ≥ 8 | "Batch tip" | `Making {qty} pizzas? Shape all balls at once — they keep 4 days in the fridge.` |
-| 4 | Thickness = Thick | "Thick crust" | "Drop to 450°F and give it 10–12 min instead of 6–8." |
-| 5 | Thickness = Thin | "Thin crust" | "Thin crust cooks fast — 4–5 minutes. Watch it closely." |
+| 1 | Gluten free on | "Gluten free" | "Gluten-free dough is sticky. Oil your hands before shaping." |
+| 2 | Size ≥ 18" | "Big pizza" | `A {size}" pizza needs a fully hot oven. Preheat at max temperature for 45 minutes.` |
+| 3 | Quantity ≥ 8 | "Big batch" | Regular: `Shape all {qty} balls at once. They keep 4 days in the fridge.` Gluten free: `Shape all {qty} balls at once. They keep up to 48 hours in the fridge.` |
+| 4 | Thickness = Thick | "Thick crust" | "Bake at 450°F for 10–12 minutes instead of the usual 6–8." |
+| 5 | Thickness = Thin | "Thin crust" | "Thin crust bakes in 4–5 minutes. Watch it closely." |
 
 ## 6. Dough making instructions
 
@@ -180,25 +181,25 @@ title switch with the gluten-free toggle.
 
 ### 6.1 Regular dough — title "Dough making instructions"
 
-1. Cool water to under 60°F
-2. Mix water + active dry yeast
-3. Add flour + olive oil, mix 2 min
-4. Add sugar and salt on low
-5. Mix 10 more minutes
-6. Cover, rest 1–3 hours
-7. Shape into balls, seal seam
-8. Refrigerate 2–4 days (3 ideal)
-9. Bring to room temp before using
+1. Chill the water to below 60°F.
+2. Stir the yeast into the water.
+3. Add the flour and olive oil. Mix for 2 minutes.
+4. Add the sugar and salt with the mixer on low.
+5. Mix for 10 more minutes.
+6. Cover and rest for 1–3 hours.
+7. Shape into balls and pinch the seams shut.
+8. Refrigerate for 2–4 days. 3 days is best.
+9. Bring to room temperature before using.
 
 ### 6.2 Gluten-free dough — title "Gluten-free instructions"
 
-1. Add cold water and yeast
-2. Add GF flour + olive oil, mix 2 min
-3. Add sugar and salt, mix 3–4 min
-4. Refrigerate 15 min to firm up
-5. Oil hands, shape into balls
-6. Refrigerate up to 48 hours
-7. Bring to room temp before using
+1. Stir the yeast into the cold water.
+2. Add the GF flour and olive oil. Mix for 2 minutes.
+3. Add the sugar and salt. Mix for 3–4 minutes.
+4. Refrigerate for 15 minutes to firm up.
+5. Oil your hands and shape into balls.
+6. Refrigerate for up to 48 hours.
+7. Bring to room temperature before using.
 
 ### 6.3 Baking guidance implied by the tips
 
@@ -274,13 +275,11 @@ device and restores them on the next visit.
 
 ## 10. Design notes
 
-Known trade-offs in the behaviour specified above. Decide per item whether to
-keep or change.
+Known trade-offs in the behaviour specified above, and how each was settled.
 
-1. **Tips are mutually exclusive.** A gluten-free, 20", thick pizza shows only
-   the GF tip; the big-pizza and thick-crust advice is hidden.
-2. **Small-batch precision.** Whole-gram rounding is coarse for small recipes
-   (one 10" thin pizza: 2 g salt, 2 g sugar, 0.4 g yeast).
-3. **Fermentation wording differs.** The batch tip says balls keep 4 days, which
-   contradicts the gluten-free 48-hour limit; it is only unreachable because the
-   GF tip takes priority.
+1. **Tips were mutually exclusive.** Resolved: every matching tip is shown
+   (section 5), so a gluten-free, 20", thick pizza shows all three.
+2. **Small-batch precision.** Kept: whole-gram rounding is coarse for small
+   recipes (one 10" thin pizza: 2 g salt, 2 g sugar, 0.4 g yeast).
+3. **Fermentation wording differed.** Resolved: the batch tip states 4 days for
+   regular dough and up to 48 hours for gluten free (section 5).

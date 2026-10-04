@@ -13,8 +13,8 @@ weight, tips and instructions, with copy, print and remembered settings.
 Success criteria:
 
 - Every row of the §3.7 reference tables is reproduced exactly.
-- All behaviour in §1–9 is implemented as written, except the two deliberate
-  changes in section 3 of this document.
+- All behaviour in §1–9 is implemented as written. `REQUIREMENTS.md` already
+  includes the decisions recorded in section 3 of this document.
 - The built site is plain static files that work from any URL path.
 
 ## 2. Decisions
@@ -25,32 +25,37 @@ Success criteria:
 | Stack | Vanilla TypeScript (strict) + Vite, Vitest for tests, no UI framework |
 | Architecture | Pure logic modules + one render function that patches static markup |
 | Visual style | "Warm pizzeria": cream background, tomato-red accent, serif headings, light theme only |
-| §10.1 exclusive tips | **Changed**: show every matching tip |
+| §10.1 exclusive tips | Resolved: show every matching tip |
 | §10.2 small-batch rounding | Kept as specified (whole grams, yeast one decimal) |
-| §10.3 batch tip wording | **Changed**: wording depends on dough type |
+| §10.3 batch tip wording | Resolved: wording depends on dough type |
+| Tip and instruction wording | Reworded for clarity; `REQUIREMENTS.md` §5 and §6 hold the exact text |
 
-## 3. Changes from REQUIREMENTS.md
+## 3. Decisions folded into REQUIREMENTS.md
+
+These were settled during design and written back into `REQUIREMENTS.md`, which
+is the single source of truth for all user-facing text.
 
 ### 3.1 Show all matching tips
 
-§5 says at most one tip, first match wins. Instead, show every tip whose
-condition matches, in the §5 priority order: GF, big pizza, batch, thick, thin.
-Thick and thin are mutually exclusive, so at most four tips show at once. When
-no condition matches, the tip container is hidden.
+The original §5 showed at most one tip, first match wins. §5 now shows every
+tip whose condition matches, in order: gluten free, big pizza, big batch, thick,
+thin. Thick and thin are mutually exclusive, so at most four tips show at once.
+When no condition matches, the tip container is hidden.
 
 ### 3.2 Dough-aware batch tip
 
-The batch tip (quantity ≥ 8) text becomes:
+The batch tip (quantity ≥ 8) has one text per dough type: 4 days for regular
+dough, up to 48 hours for gluten free.
 
-- Regular: `Making {qty} pizzas? Shape all balls at once — they keep 4 days in the fridge.`
-- Gluten free: `Making {qty} pizzas? Shape all balls at once — they keep up to 48 hours in the fridge.`
+### 3.3 Reworded tips and instructions
 
-The other four tips keep their §5 label and text verbatim.
+Every tip, tip label and instruction step was reworded for clarity and
+consistency: full sentences, "minutes" spelled out, no cooking facts or numbers
+changed. Tip labels are "Gluten free", "Big pizza", "Big batch", "Thick crust"
+and "Thin crust".
 
-### 3.3 Requirements update
-
-`REQUIREMENTS.md` §5 and §10 are edited to match 3.1 and 3.2 so the
-requirements and the code agree. This is its own commit.
+`content.ts` and `tips.ts` copy their strings verbatim from `REQUIREMENTS.md`
+§5 and §6. This document does not repeat them.
 
 ## 4. Architecture
 
@@ -164,7 +169,7 @@ grams use `Math.round` (values are positive, so halves round up). Yeast is
 
 ### 5.3 Tips
 
-As §5, with the changes in section 3 above. `tipsFor` returns an ordered array;
+As §5. `tipsFor` returns an ordered array;
 the UI renders them as a stacked list, each with its own label, and hides the
 container when the array is empty.
 
